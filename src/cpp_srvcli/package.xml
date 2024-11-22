@@ -3,8 +3,8 @@
 <package format="3">
   <name>cpp_srvcli</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="achen26@ncsu.edu">ise.ros</maintainer>
+  <description>Example C++ client server tutorial</description>
+  <maintainer email="phgandh2@ncsu.edu">Prem Gandhi</maintainer>
   <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
