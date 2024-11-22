@@ -1,3 +1,8 @@
+install/
+log/
+
+
+# ROS template Gitignore
 devel/
 logs/
 build/
