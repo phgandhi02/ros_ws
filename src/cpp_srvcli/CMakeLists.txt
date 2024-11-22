@@ -21,6 +21,8 @@ if(BUILD_TESTING)
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+#enables ros2 run to find the executable.
 install(TARGETS server DESTINATION lib/${PROJECT_NAME})
 
 # need to tell ament_package where to find the package so we run the line above.
