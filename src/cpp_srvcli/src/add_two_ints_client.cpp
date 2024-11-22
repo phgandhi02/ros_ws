@@ -42,4 +42,16 @@ int main(int argc, char **argv)
   }
 
   auto result = client->async_send_request(request);
+  if (rclcpp::FutureReturnCode::SUCCESS == rclcpp::spin_until_future_complete(node, result))
+  {
+    RCLCPP_INFO(rclcpp::get_logger("rclcpp"),"Sum: %ld", result.get()->sum);
+    //client->remove_pending_request(future);
+    // handle timeout
+  } else {
+    RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Failed to call service add_two_ints");
+    // handle_response(future.get());
+  }
+
+  rclcpp::shutdown();
+  return 0;
 }
