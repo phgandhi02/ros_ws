@@ -23,3 +23,8 @@ if(BUILD_TESTING)
 endif()
 
 ament_package()
+
+
+# We add an executable macro to this CMAKE file so that you can run this node via ros2 run. 
+add_executable(server src/add_two_ints_server.cpp)
+ament_target_dependencies(server rclcpp example_interfaces) # here we list the node dependencies
