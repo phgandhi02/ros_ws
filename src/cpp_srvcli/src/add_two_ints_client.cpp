@@ -27,4 +27,17 @@ int main(int argc, char **argv)
   auto request = std::make_shared<example_interfaces::srv::AddTwoInts::Request>();
   request->a = atoll(argv[1]);
   request->b = atoll(argv[2]);
+
+  // This while gives the client one second to see if there are any services in the network. If
+  // it doesn't find any then it will keep waiting. If the client is cancelled by you pressing 
+  // Ctrl + C then the error message below will print and this node will return 0; 
+  while (!client->wait_for_service(1s))
+  {
+    if (!rclcpp::ok())
+    {
+      RCLCPP_ERROR(rclcpp::get_logger("rclcpp"),"Interrupted while waiting for service. Exiting...");
+      return 0;
+    }
+    RCLCPP_INFO(rclcpp::get_logger("rclcpp"),"Service not available, waiting again...");
+  }
 }
