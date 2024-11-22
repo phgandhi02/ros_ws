@@ -1,3 +1,7 @@
+/*
+The client node here will send a request to the server and then shuts down after it gets a response
+or fails. If we want the node to persist then we would use the rclcpp::spin(node)
+*/
 #include "rclcpp/rclcpp.hpp"
 #include "example_interfaces/srv/add_two_ints.hpp"
 
@@ -18,6 +22,12 @@ int main(int argc, char **argv)
   }
 
   // We are create a shared ptr to a node we just constructed called add_two_ints_client
+  /* 
+  We are creating a node here that is run by an executable and we can do more than just have it 
+  a client. We attach a client to the node and then handle if the response is a success
+  any errors that may come up from the
+  response.
+  */
   std::shared_ptr<rclcpp::Node> node = rclcpp::Node::make_shared("add_two_ints_client");
 
   // We are creating a client shared_ptr by calling the create_client method of the Node class
