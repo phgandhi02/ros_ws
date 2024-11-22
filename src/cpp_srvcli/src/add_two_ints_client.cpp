@@ -40,4 +40,6 @@ int main(int argc, char **argv)
     }
     RCLCPP_INFO(rclcpp::get_logger("rclcpp"),"Service not available, waiting again...");
   }
+
+  auto result = client->async_send_request(request);
 }
