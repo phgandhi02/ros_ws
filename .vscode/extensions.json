@@ -1,7 +1,6 @@
 {
   "recommendations": 
-  [
-    "dbaeumer.vscode-eslint", 
+  [ 
     "esbenp.prettier-vscode",
     "althack.ament-task-provider",
     "ms-vscode-remote.remote-ssh",
