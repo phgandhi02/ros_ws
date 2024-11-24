@@ -5,10 +5,10 @@
     "tasks": [
         // Build tasks
         {
-            "label": "build workspace",
-            "detail": "Build ROS 2 workspace",
+            "label": "build",
+            "detail": "Build workspace (default)",
             "type": "shell",
-            "command": "colcon build --symlink-install --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+            "command": "./build.sh",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -16,71 +16,225 @@
             "problemMatcher": "$gcc"
         },
         {
-            "label": "build pedantic release",
-            "detail": "Build workspace with release info and with all warnings enabled",
+            "label": "debug",
+            "detail": "Build workspace (debug)",
             "type": "shell",
-            "command": "colcon build --symlink-install --cmake-args '-DCMAKE_BUILD_TYPE=RelWithDebInfo' '-DCMAKE_EXPORT_COMPILE_COMMANDS=On' -Wall -Wextra -Wpedantic",
-            "group": {
-                "kind": "build",
-                "isDefault": true
+            "command": "./build.sh",
+            "options": {
+                "env": {
+                    "BUILD_TYPE": "Debug"
+                }
             },
-            "problemMatcher": "$gcc"
-        },
-        {
-            "label": "build single package",
-            "detail": "Build single ROS 2 package",
-            "type": "shell",
-            "command": "colcon build --symlink-install --packages-select ${input:package} --cmake-args '-DCMAKE_EXPORT_COMPILE_COMMANDS=On'",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": "$gcc"
-        },
-        {
-            "label": "debug workspace",
-            "detail": "Build ROS 2 workspace with debug symbols",
-            "type": "shell",
-            "command": "colcon build --symlink-install  --cmake-args '-DCMAKE_BUILD_TYPE=Debug'",
             "group": "build",
             "problemMatcher": "$gcc"
         },
+        // Test tasks
         {
-            "label": "debug single package",
-            "detail": "Build single ROS 2 package with debug symbols",
-            "type": "shell",
-            "command": "colcon build --symlink-install --packages-select ${input:package} --cmake-args '-DCMAKE_BUILD_TYPE=Debug'",
-            "group": "build",
-            "problemMatcher": "$gcc"
-        },
-        {
-            "label": "source-humble",
-            "detail": "Sources the current workspace with bash shell",
-            "type": "shell",
-            "command": "source ${workspaceFolder}/install/setup.bash && printenv > ${workspaceFolder}/local_humble_ws.env",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": "$gcc"
-        },
-        {
-            "label": "test workspace",
+            "label": "test",
             "detail": "Run all unit tests and show results.",
             "type": "shell",
-            "command": "colcon test && colcon test-result --all",
+            "command": "./test.sh",
             "group": {
                 "kind": "test",
                 "isDefault": true
             }
+        },
+        // Clean
+        {
+            "label": "clean",
+            "detail": "Run the clean target",
+            "type": "shell",
+            "command": "colcon build --cmake-target clean",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "purge",
+            "detail": "Purge workspace by deleting all generated files.",
+            "type": "shell",
+            "command": "rm -fr build install log; py3clean .",
+            "problemMatcher": []
+        },
+        // Linting and static code analysis tasks
+        {
+            "label": "fix",
+            "detail": "Reformat files with uncrustify.",
+            "type": "shell",
+            "command": "ament_uncrustify --reformat src/",
+            "problemMatcher": []
+        },
+        {
+            "label": "uncrustify",
+            "detail": "Lint files with uncrustify.",
+            "type": "shell",
+            "command": "ament_uncrustify src/",
+            "presentation": {
+                "panel": "dedicated",
+                "reveal": "silent",
+                "clear": true
+            },
+            "problemMatcher": [
+                {
+                    "owner": "uncrustify",
+                    "source": "uncrustify",
+                    "fileLocation": "relative",
+                    "pattern": [
+                        // just the file name message
+                        {
+                            "regexp": "^(.*)'(.*)':",
+                            "kind": "file",
+                            "file": 2,
+                            "message": 1
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "cpplint",
+            "detail": "Lint files with cpplint.",
+            "type": "ament",
+            "task": "cpplint",
+            "path": "src/",
+            "problemMatcher": "$ament_cpplint",
+            "presentation": {
+                "panel": "dedicated",
+                "reveal": "silent",
+                "clear": true
+            },
+        },
+        {
+            "label": "cppcheck",
+            "detail": "Run static code checker cppcheck.",
+            "type": "ament",
+            "task": "cppcheck",
+            "path": "src/",
+            "problemMatcher": "$ament_cppcheck",
+            "presentation": {
+                "panel": "dedicated",
+                "reveal": "silent",
+                "clear": true
+            },
+            "options": {
+                "env": {
+                    "AMENT_CPPCHECK_ALLOW_SLOW_VERSIONS": "1"
+                }
+            }
+        },
+        {
+            "label": "lint_cmake",
+            "detail": "Run lint on cmake files.",
+            "type": "ament",
+            "task": "lint_cmake",
+            "path": "src/",
+            "problemMatcher": "$ament_lint_cmake",
+            "presentation": {
+                "panel": "dedicated",
+                "reveal": "silent",
+                "clear": true
+            }
+        },
+        {
+            "label": "flake8",
+            "detail": "Run flake8 on python files.",
+            "type": "ament",
+            "task": "flake8",
+            "path": "src/",
+            "problemMatcher": "$ament_flake8",
+            "presentation": {
+                "panel": "dedicated",
+                "reveal": "silent",
+                "clear": true
+            }
+        },
+        {
+            "label": "pep257",
+            "detail": "Run pep257 on python files.",
+            "type": "ament",
+            "task": "pep257",
+            "path": "src/",
+            "problemMatcher": "$ament_pep257",
+            "presentation": {
+                "panel": "dedicated",
+                "reveal": "silent",
+                "clear": true
+            }
+        },
+        {
+            "label": "xmllint",
+            "detail": "Run xmllint on xml files.",
+            "type": "ament",
+            "task": "xmllint",
+            "path": "src/",
+            "problemMatcher": "$ament_xmllint",
+            "presentation": {
+                "panel": "dedicated",
+                "reveal": "silent",
+                "clear": true
+            }
+        },
+        {
+            "label": "lint all",
+            "detail": "Run all linters.",
+            "dependsOn": [
+                "cppcheck",
+                "cpplint",
+                "flake8",
+                "lint_cmake",
+                "pep257",
+                "xmllint",
+                "uncrustify"
+            ],
+            "problemMatcher": []
+        },
+        // Workspace editing tasks
+        {
+            "label": "new ament_cmake package",
+            "detail": "Create a new ROS cpp package from a template.",
+            "type": "shell",
+            "command": "ros2 pkg create --destination-directory src --build-type ament_cmake ${input:package}",
+            "problemMatcher": []
+        },
+        {
+            "label": "new ament_python package",
+            "detail": "Create a new ROS python package from a template.",
+            "type": "shell",
+            "command": "ros2 pkg create --destination-directory src --build-type ament_python ${input:package}",
+            "problemMatcher": []
+        },
+        {
+            "label": "import from workspace file",
+            "detail": "Use vcs to import modules specified by a workspace/rosinstall file.",
+            "type": "shell",
+            "command": "vcs import < src/ros2.repos src",
+            "problemMatcher": []
+        },
+        {
+            "label": "update workspace file",
+            "detail": "Use vcs to update repositories in src to workspace file.",
+            "type": "shell",
+            "command": "vcs export src > src/ros2.repos",
+            "problemMatcher": []
+        },
+        {
+            "label": "install dependencies",
+            "detail": "Install all dependencies specified in the workspaces package.xml files.",
+            "type": "shell",
+            "command": "sudo apt-get update && rosdep update && rosdep install --from-paths src --ignore-src -y",
+            "problemMatcher": []
+        },
+        {
+            "label": "setup",
+            "detail": "Set up the workspace",
+            "type": "shell",
+            "command": "./setup.sh",
+            "problemMatcher": []
         }
     ],
     "inputs": [
         {
             "id": "package",
             "type": "promptString",
-            "description": "Package name",
-            "default": "demo_nodes_cpp"
+            "description": "Package name"
         }
     ]
 }
