@@ -16,10 +16,10 @@ int main(int argc, char **argv)
 {
   rclcpp::init(argc,argv);
 
-  if (argc != 3)
+  if (argc != 3) // this means that we have something in the 1st arg and then the 2nd and 3rd args are the two digits we are adding.
   {
     RCLCPP_INFO(rclcpp::get_logger("rclcpp"),"usage: add_two_ints_client X Y ");
-    return 1;
+    return 1; // return an error because we got the wrong number of args 
   }
 
   // We are create a shared ptr to a node we just constructed called add_two_ints_client
@@ -46,14 +46,14 @@ int main(int argc, char **argv)
   // This while gives the client one second to see if there are any services in the network. If
   // it doesn't find any then it will keep waiting. If the client is cancelled by you pressing 
   // Ctrl + C then the error message below will print and this node will return 0; 
-  while (!client->wait_for_service(1s))
+  while (!client->wait_for_service(1s)) // check to see if any servers are in the network
   {
     if (!rclcpp::ok())
     {
       RCLCPP_ERROR(rclcpp::get_logger("rclcpp"),"Interrupted while waiting for service. Exiting...");
-      return 0;
+      return 0; // return because terminal was cancelled.
     }
-    RCLCPP_INFO(rclcpp::get_logger("rclcpp"),"Service not available, waiting again...");
+    RCLCPP_INFO(rclcpp::get_logger("rclcpp"),"Service not available, waiting again..."); //try again to see if the server node is up.
   }
 
   auto result = client->async_send_request(request);
