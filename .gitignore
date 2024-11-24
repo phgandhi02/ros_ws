@@ -1,5 +1,7 @@
 install/
 log/
+src/ros2_control_demos/.ccache
+src/ros2_control_demos/.work
 
 # ROS gitignore template
 devel/
