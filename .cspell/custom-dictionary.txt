@@ -32,6 +32,7 @@ qtcreator
 schematypens
 shardulm
 smilerobotics
+srvs
 stric
 toolsai
 unitttest
