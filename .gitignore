@@ -1,12 +1,12 @@
-install/
-log/
+install/**
+log/**
 src/ros2_control_demos/.ccache
 src/ros2_control_demos/.work
 
 # ROS gitignore template
 devel/
 logs/
-build/
+build/**
 bin/
 lib/
 msg_gen/
