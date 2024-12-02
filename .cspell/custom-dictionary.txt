@@ -17,6 +17,7 @@ distro
 eamodio
 erickkramer
 fileheadercomment
+GNUCXX
 hykin
 ints
 josetr

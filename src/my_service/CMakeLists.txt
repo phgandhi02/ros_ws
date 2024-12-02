@@ -23,4 +23,18 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+# We add an executable macro to this CMAKE file so that you can run this node via ros2 run. 
+add_executable(server src/my_service.cpp)
+ament_target_dependencies(server rclcpp std_srvs geometry_msgs) # here we list the node dependencies
+
+add_executable(client src/my_client.cpp)
+ament_target_dependencies(client rclcpp std_srvs geometry_msgs)
+
+#enables ros2 run to find the executable.
+install(TARGETS 
+        server
+        client
+        DESTINATION lib/${PROJECT_NAME})
+
+# need to tell ament_package where to find the package so we run the line above.
 ament_package()

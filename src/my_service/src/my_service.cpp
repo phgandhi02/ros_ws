@@ -1,6 +1,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "std_srvs/srv/trigger.hpp"
 #include "geometry_msgs/msg/twist.hpp"
+#include <string>
 
 
 #include <memory>
@@ -15,15 +16,15 @@ void move(const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
   twist.linear.x = 0.3;
   for (int i = 1; (i < 5) && rclcpp::ok(); ++i){
     publisher->publish(twist);
-    loop_rate.sleep();
+    // loop_rate.sleep();
   }
 
   twist.linear.x = 0.0;
   publisher->publish(twist);
   response->success = true;
-  response->message = "Successfully called service";
+  response->message = std::string("Successfully called service");
   RCLCPP_INFO(rclcpp::get_logger("rclcpp"),"Incoming response\n");
-  RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "sending back response: [%s]", response->message);
+  RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "sending back response: [%s]",response->message.c_str());
 }
 
 int main(int argc, char **argv)
