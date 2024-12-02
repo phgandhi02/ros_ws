@@ -5,13 +5,13 @@ written in that library. Oftentimes we will not write our own srv message and in
 that comes from another package.
 */
 #include "rclcpp/rclcpp.hpp"
-#include "example_interfaces/srv/add_two_ints.hpp"
+#include "tutorial_interfaces/srv/add_three_ints.hpp"
 
 #include <memory>
 
 /*
-Here we define the function that we want to use ie. we want to add two ints together. This function
-takes two arguments: request and response. The request should contain all the information needed to
+Here we define the function that we want to use ie. we want to add Three ints together. This function
+takes Three arguments: request and response. The request should contain all the information needed to
 provide the response. The request is a shared_ptr which means that we can ensure the objects created
 by this node are destroyed by only one thread ie. the last resource using the object.
 
@@ -27,14 +27,15 @@ void func(const std::shared_ptr<pkg::srv::srv_message::Request> request,
     // send response based on request attributes
 }
 */
-void add(const std::shared_ptr<example_interfaces::srv::AddTwoInts::Request> request,
-            std::shared_ptr<example_interfaces::srv::AddTwoInts::Response> response)
+void add(const std::shared_ptr<tutorial_interfaces::srv::AddThreeInts::Request> request,
+         std::shared_ptr<tutorial_interfaces::srv::AddThreeInts::Response> response)
 {
-    response->sum = request->a + request->b;
-    RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Incoming request\na: %ld" "b: %ld",
-        request->a, request->b);
-    RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Sending back response: [%ld]",
-        (long int)response->sum);
+  response->sum = request->a + request->b + request->c;
+  RCLCPP_INFO(rclcpp::get_logger("rclcpp"),
+              "Incoming request\na: %ld"
+              "b: %ld",
+              request->a, request->b);
+  RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Sending back response: [%ld]", (long int)response->sum);
 }
 /*
 We call the main function and accept any args that might be passed if this function is called. Then
@@ -47,17 +48,18 @@ We save the service created in the service variable which is also a shared_ptr. 
 an info message and then spin the node up. Once the node lifecycle ends then the shutdown function
 is called.
 */
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
-    rclcpp::init(argc, argv);
+  rclcpp::init(argc, argv);
 
-    std::shared_ptr<rclcpp::Node> node = rclcpp::Node::make_shared("add_two_ints_server"); // Shared_ptr to node variable which is a shared_ptr<rclcpp::Node> type.
+  std::shared_ptr<rclcpp::Node> node = rclcpp::Node::make_shared(
+      "add_three_ints_server");  // Shared_ptr to node variable which is a shared_ptr<rclcpp::Node> type.
 
-    rclcpp::Service<example_interfaces::srv::AddTwoInts>::SharedPtr service =
-        node->create_service<example_interfaces::srv::AddTwoInts>("add_two_ints", &add);
+  rclcpp::Service<tutorial_interfaces::srv::AddThreeInts>::SharedPtr service =
+      node->create_service<tutorial_interfaces::srv::AddThreeInts>("add_three_ints", &add);
 
-    RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Ready to add two ints.");
+  RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Ready to add Three ints.");
 
-    rclcpp::spin(node);
-    rclcpp::shutdown();
+  rclcpp::spin(node);
+  rclcpp::shutdown();
 }
