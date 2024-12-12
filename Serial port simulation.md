@@ -1,0 +1,2 @@
+# How to create a simulated serial port for testing the hardware interface with an Arduino
+I want to try and create a simulated serial port which can reduce the development time for testing if a some code that is supposed to be on the Arduino will work. This means that I need to have a script that runs the C++ code on the arduino with the simulated inputs. I also need to test the serial connection to see how ROS2 will react in a simulated situation.
