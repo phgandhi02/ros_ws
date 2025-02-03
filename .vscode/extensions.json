@@ -14,7 +14,7 @@
     "xaver.clang-format",
     "nonanonno.vscode-ros2",
     "doi.fileheadercomment",
-    "eamodio.gitlens",
+    // "eamodio.gitlens",
     "ms-azuretools.vscode-docker",
     "ms-iot.vscode-ros",
     "ms-vscode-remote.remote-containers",
