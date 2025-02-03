@@ -30,6 +30,7 @@ Pylance
 pytest
 qcreator
 qtcreator
+rosidl
 schematypens
 shardulm
 smilerobotics

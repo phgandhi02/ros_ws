@@ -21,17 +21,12 @@
     "ms-vscode-remote.remote-ssh",
     "ms-vscode.remote-explorer",
     "ms-vscode.test-adapter-converter",
-    // "ms-vsliveshare.vsliveshare",
     "njpwerner.autodocstring",
     "shardulm94.trailing-spaces",
     "smilerobotics.urdf",
     "yzhang.markdown-all-in-one",
     "charliermarsh.ruff",
     "ms-python.python",
-    "ms-python.vscode-pylance",
-    "ms-toolsai.jupyter",
-    "ms-toolsai.jupyter-keymap",
-    "ms-toolsai.vscode-jupyter-cell-tags",
-    "ms-toolsai.jupyter-renderers"
+    "ms-python.vscode-pylance"
   ]
 }

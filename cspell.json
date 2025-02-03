@@ -1,6 +1,10 @@
 {
     "version": "0.2",
-    "ignorePaths": [],
+    "ignorePaths": [
+        "~/.vscode",
+        "**.rst",
+        "**.md"
+    ],
     "dictionaryDefinitions": [
         {
             "name": "custom-dictionary",
@@ -12,9 +16,11 @@
         "custom-dictionary"
     ],
     "words": [
+        "ament_lint_common",
         "rclcpp",
         "srvcli"
     ],
     "ignoreWords": [],
-    "import": []
+    "import": [],
+    "enabled": false
 }

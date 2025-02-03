@@ -10,6 +10,10 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(example_interfaces REQUIRED)
 
+find_package(tutorial_interfaces REQUIRED)         # dependencies for custom srv message
+
+
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
@@ -22,17 +26,26 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-# We add an executable macro to this CMAKE file so that you can run this node via ros2 run. 
+# We add an executable macro to this CMAKE file so that you can run this node via ros2 run.
 add_executable(server src/add_two_ints_server.cpp)
 ament_target_dependencies(server rclcpp example_interfaces) # here we list the node dependencies
 
 add_executable(client src/add_two_ints_client.cpp)
 ament_target_dependencies(client rclcpp example_interfaces)
 
+# Executables for adding 3 ints
+add_executable(server_three src/add_three_ints_server.cpp)
+ament_target_dependencies(server_three rclcpp tutorial_interfaces)                      # CHANGE
+
+add_executable(client_three src/add_three_ints_client.cpp)
+ament_target_dependencies(client_three rclcpp tutorial_interfaces)                      # CHANGE
+
 #enables ros2 run to find the executable.
-install(TARGETS 
+install(TARGETS
         server
         client
+        server_three
+        client_three
         DESTINATION lib/${PROJECT_NAME})
 
 # need to tell ament_package where to find the package so we run the line above.

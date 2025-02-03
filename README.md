@@ -12,3 +12,8 @@ This is my ROS2 Workspace
     - This file contains the License and usage parameters of the code.
 5. README.md
     - This is the current file and it seeks to outline the purpose of this repo and detail any important install steps, common applications, and give a quick introduction to the repo. 
+
+In order to build the packages in this branch you must use the following colcon command to build:
+```bash
+colcon build --packages-start tutorial_interfaces --cmake-clean-cache
+```
